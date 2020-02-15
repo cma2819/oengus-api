@@ -3,12 +3,14 @@
   "version": "0.9.0",
   "description": "API client for oengus.io",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -b",
     "watch": "tsc -b --watch",
     "lint": "eslint . --ext .js,.ts --fix",
     "test:build": "tsc -b tsconfig.testing.json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "build"
   },
   "repository": {
     "type": "git",
