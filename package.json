@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .js,.ts --fix",
     "test:build": "tsc -b tsconfig.testing.json",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "build"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
