@@ -116,3 +116,47 @@ export interface OengusSelectionLine {
 export interface OengusSelection {
     [index: string]: OengusSelectionLine;
 }
+
+export interface OengusOpponent {
+    id: number;
+    video: string;
+}
+
+export interface OengusAvailability {
+    from: string;
+    to: string;
+}
+
+export interface OengusOpponentDtos {
+    id: number;
+    user: OengusUser;
+    video: string;
+    availabilities: OengusAvailability[];
+}
+
+export interface OengusCategory {
+    id: number;
+    name: string;
+    estimate: string;
+    description: string;
+    video: string;
+    type: OengusRunType;
+    code?: string;
+    opponents: OengusOpponent[];
+    opponentDtos: OengusOpponentDtos[];
+    user: OengusUser;
+}
+
+export interface OengusGameLine {
+    id: number;
+    name: string;
+    description: string;
+    console: string;
+    ratio: string;
+    emulated: boolean;
+    categories: OengusCategory[];
+}
+
+export interface OengusGame {
+    [index: number]: OengusGameLine;
+}

@@ -1,6 +1,6 @@
 import { get } from './lib/api';
-import { OengusMarathon, OengusSchedule, OengusSelectionStatus, OengusSelection } from './types';
-import { isMarathon, isSchedule, isSelection, isSelectionStatus } from './lib/predicate';
+import { OengusMarathon, OengusSchedule, OengusSelectionStatus, OengusSelection, OengusGame } from './types';
+import { isMarathon, isSchedule, isSelection, isSelectionStatus, isGame } from './lib/predicate';
 
 export const getMarathon = async (id: string): Promise<OengusMarathon> => {
     const response = await get(`marathon/${id}`);
@@ -30,4 +30,12 @@ export const getSelection = async (id: string, status?: string): Promise<OengusS
         return response.data;
     }
     throw new Error('Response could not parse to Selection.');
+}
+
+export const getGame = async (id: string): Promise<OengusGame> => {
+    const response = await get(`marathon/${id}/game`);
+    if (isGame(response.data)) {
+        return response.data;
+    }
+    throw new Error('Response could not parse to Game.');
 }

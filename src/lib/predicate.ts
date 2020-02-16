@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { OengusMarathon, OengusQuestion, OengusUser, OengusRole, OengusFieldType, OengusRunType, OengusLine, OengusSchedule, OengusSelection, OengusSelectionStatus, OengusSelectionLine } from '../types';
+import { OengusMarathon, OengusQuestion, OengusUser, OengusRole, OengusFieldType, OengusRunType, OengusLine, OengusSchedule, OengusSelection, OengusSelectionStatus, OengusSelectionLine, OengusOpponent, OengusOpponentDtos, OengusAvailability, OengusGameLine, OengusGame, OengusCategory } from '../types';
 
 export const isRole = (source: any): source is OengusRole => {
     if (typeof source !== 'string') {
@@ -226,6 +226,114 @@ export const isSelection = (source: any): source is OengusSelection => {
         !isSelectionLine(source[key])
     })) {
         console.error(`Selection[${source}] could not be parsed.`);
+        return false;
+    }
+    return true;
+}
+
+export const isOpponent = (source: any): source is OengusOpponent => {
+    if (
+        !source.id || typeof source.id !== 'number' ||
+        !source.video || typeof source.video !== 'string'
+    ) {
+        console.error(`Opponent[${source}] could not be parsed.`);
+        return false;
+    }
+    return true;
+}
+
+export const isAvailability = (source: any): source is OengusAvailability => {
+    if (
+        !source.from || typeof source.from !== 'string' ||
+        !source.to || typeof source.to !== 'string'
+    ) {
+        console.error(`OpponentAvailability[${source}] could not be parsed.`);
+        return false;
+    }
+    return true;
+}
+
+export const isOpponentDtos = (source: any): source is OengusOpponentDtos => {
+    if (
+        !source.id || typeof source.id !== 'number' ||
+        !source.user || !isUser(source.user) ||
+        !source.video || typeof source.video !== 'string'
+    ) {
+        console.error(`OpponentDtos[${source}] could not be parsed.`);
+        return false;
+    }
+    if (!source.availabilities || typeof source.availabilities !== 'object'
+        || source.availabilities.find((ele: any) => {
+            return !isAvailability(ele);
+        }) !== undefined) {
+        console.error(`OpponentDtos[${source.id}] could not be parsed.`);
+        return false;
+    }
+    return true;
+}
+
+export const isCategory = (source: any): source is OengusCategory => {
+    if (
+        source.id === undefined || typeof source.id !== 'number' ||
+        !source.name || typeof source.name !== 'string' ||
+        !source.estimate || typeof source.estimate !== 'string' ||
+        !source.description || typeof source.description !== 'string' ||
+        !source.video || typeof source.video !== 'string' ||
+        !source.type || !isRunType(source.type) ||
+        (source.code && typeof source.code !== 'string')
+    ) {
+        console.error(`Category[${source.id}] could not be parsed.`);
+        return false;
+    }
+    if (source.opponents && 
+        (typeof source.opponents !== 'object' || source.opponents.find((ele: any) => {
+            return !isOpponent(ele);
+        }) !== undefined)) {
+        console.error(`Category[${source.id}] could not be parsed.`);
+        return false;
+    }
+    if (source.opponentDtos &&
+        (typeof source.opponentDtos !== 'object' || source.opponentDtos.find((ele: any) => {
+            return !isOpponentDtos(ele);
+        }) !== undefined)) {
+        console.error(`Category[${source.id}] could not be parsed.`);
+        return false;
+    }
+    return true;
+}
+
+export const isGameLine = (source: any): source is OengusGameLine => {
+    if (
+        source.id === undefined || typeof source.id !== 'number' ||
+        !source.name || typeof source.name !== 'string' ||
+        !source.description || typeof source.description !== 'string' ||
+        !source.console || typeof source.console !== 'string' ||
+        !source.ratio || typeof source.ratio !== 'string' ||
+        source.emulated === undefined || typeof source.emulated !== 'boolean'
+    ) {
+        console.error(`GameLine[${source}] could not be parsed.`);
+        return false;
+    }
+    if (!source.categories || typeof source.categories !== 'object'
+        || source.categories.find((ele: any) => {
+            return !isCategory(ele);
+        }) !== undefined) {
+        console.error(`GameLine[${source.id}] could not be parsed.`);
+        return false;
+    }
+    return true;
+}
+
+export const isGame = (source: any): source is OengusGame => {
+    if (!source || typeof source !== 'object') {
+        console.error(`Game[${source}] could not be parsed.`);
+        return false;
+    }
+    const keys = Object.keys(source);
+    if (keys.find((key: string) => {
+        !isGameLine(source[key])
+    })) {
+        console.error(`Game[${source}] could not be parsed.`);
         return false;
     }
     return true;
