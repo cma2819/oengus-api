@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { OengusMarathon, OengusQuestion, OengusUser, OengusRole, OengusFieldType } from '../types';
+import { OengusMarathon, OengusQuestion, OengusUser, OengusRole, OengusFieldType, OengusRunType, OengusLine, OengusSchedule, OengusSelection, OengusSelectionStatus, OengusSelectionLine } from '../types';
 
 export const isRole = (source: any): source is OengusRole => {
     if (typeof source !== 'string') {
@@ -14,6 +14,21 @@ export const isRole = (source: any): source is OengusRole => {
     }
     return true;
 }
+
+export const isRunType = (source: any): source is OengusRunType => {
+    if (typeof source !== 'string') {
+        console.error(`RunType[${source}] could not be parsed.`);
+        return false;
+    }
+    if (['SINGLE', 'RACE', 'COOP', 'COOP_RACE', 'OTHER'].find((type: string) => {
+        return type === source;
+    }) === undefined) {
+        console.error(`RunType[${source}] could not be parsed.`);
+        return false;
+    }
+    return true;
+}
+
 export const isUser = (source: any): source is OengusUser => {
     if (
         !source.id || typeof source.id !== 'number' ||
@@ -34,6 +49,50 @@ export const isUser = (source: any): source is OengusUser => {
             return !isRole(ele);
         }) !== undefined) {
         console.error(`User[${source.id}] could not be parsed.`);
+        return false;
+    }
+    return true;
+}
+
+export const isLine = (source: any): source is OengusLine => {
+    if (
+        !source.id || typeof source.id !== 'number' ||
+        !source.gameName || typeof source.gameName !== 'string' ||
+        !source.console || typeof source.console !== 'string' ||
+        source.emulated === undefined || typeof source.emulated !== 'boolean' ||
+        !source.ratio || typeof source.ratio !== 'string' ||
+        !source.categoryName || typeof source.categoryName !== 'string' ||
+        !source.estimate || typeof source.estimate !== 'string' ||
+        !source.setupTime || typeof source.setupTime !== 'string' ||
+        source.setupBlock === undefined || typeof source.setupBlock !== 'boolean' ||
+        source.customRun === undefined || typeof source.customRun !== 'boolean' ||
+        source.position === undefined || typeof source.position !== 'number' ||
+        !source.categoryId || typeof source.categoryId !== 'number' ||
+        !source.type || !isRunType(source.type)
+    ) {
+        console.error(`Line[${source.id}] could not be parsed.`);
+        return false;
+    }
+    if (!source.runners || typeof source.runners !== 'object'
+        || source.runners.find((ele: any) => {
+            return !isUser(ele);
+        }) !== undefined) {
+        console.error(`Line[${source.id}] could not be parsed.`);
+        return false;
+    }
+    return true;
+}
+
+export const isSchedule = (source: any): source is OengusSchedule => {
+    if (!source.id || typeof source.id !== 'number') {
+        console.error(`Schedule[${source.id}] could not be parsed.`);
+        return false;
+    }
+    if (!source.lines || typeof source.lines !== 'object'
+        || source.lines.find((ele: any) => {
+            return !isLine(ele);
+        }) !== undefined) {
+        console.error(`Schedule[${source.id}] could not be parsed.`);
         return false;
     }
     return true;
@@ -70,7 +129,7 @@ export const isQuestion = (source: any): source is OengusQuestion => {
         || source.options.find((ele: any) => {
             return typeof ele !== 'string';
         }) !== undefined) {
-            console.log(typeof source.options);
+        console.log(typeof source.options);
         console.error(`Question[${source.id}] could not be parsed.`);
         return false;
     }
@@ -129,4 +188,45 @@ export const isMarathon = (source: any): source is OengusMarathon => {
         return false;
     }
     return true
+}
+
+export const isSelectionStatus = (source: any): source is OengusSelectionStatus => {
+    if (typeof source !== 'string') {
+        console.error(`Selection[${source}] could not be parsed.`);
+        return false;
+    }
+    if (['VALIDATED', 'TODO', 'BONUS', 'REJECTED'].find((type: string) => {
+        return type === source;
+    }) === undefined) {
+        console.error(`Selection[${source}] could not be parsed.`);
+        return false;
+    }
+    return true;
+}
+
+export const isSelectionLine = (source: any): source is OengusSelectionLine => {
+    if (
+        !source.id === undefined || typeof source.id !== 'number' ||
+        !source.categoryId === undefined || typeof source.categoryId !== 'number' ||
+        !source.status || !isSelectionStatus(source.status)
+    ) {
+        console.error(`SelectionLine[${source.id}] could not be parsed.`);
+        return false;
+    }
+    return true;
+}
+
+export const isSelection = (source: any): source is OengusSelection => {
+    if (!source || typeof source !== 'object') {
+        console.error(`Selection[${source}] could not be parsed.`);
+        return false;
+    }
+    const keys = Object.keys(source);
+    if (keys.find((key: string) => {
+        !isSelectionLine(source[key])
+    })) {
+        console.error(`Selection[${source}] could not be parsed.`);
+        return false;
+    }
+    return true;
 }

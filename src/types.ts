@@ -79,6 +79,7 @@ export enum OengusRunType {
     single = 'SINGLE',
     race = 'RACE',
     coop = 'COOP',
+    coopRace = 'COOP_RACE',
     other = 'OTHER'
 }
 
@@ -97,4 +98,21 @@ export interface OengusUser {
 
 export enum OengusRole {
     user = 'ROLE_USER'
+}
+
+export enum OengusSelectionStatus {
+    validated = 'VALIDATED',
+    todo = 'TODO',
+    bonus = 'BONUS',
+    rejected = 'REJECTED'
+}
+
+export interface OengusSelectionLine {
+    id: number;
+    categoryId: number;
+    status: OengusSelectionStatus;
+}
+
+export interface OengusSelection {
+    [index: string]: OengusSelectionLine;
 }
