@@ -309,7 +309,8 @@ export const isGameLine = (source: any): source is OengusGame => {
         !source.description || typeof source.description !== 'string' ||
         !source.console || typeof source.console !== 'string' ||
         !source.ratio || typeof source.ratio !== 'string' ||
-        source.emulated === undefined || typeof source.emulated !== 'boolean'
+        source.emulated === undefined || typeof source.emulated !== 'boolean',
+        !source.user || !isUser(source.user)
     ) {
         console.error(`GameLine[${source}] could not be parsed.`);
         return false;

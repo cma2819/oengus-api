@@ -140,7 +140,6 @@ export interface OengusCategory {
     code?: string;
     opponents: OengusOpponent[];
     opponentDtos: OengusOpponentDtos[];
-    user: OengusUser;
 }
 
 export interface OengusGame {
@@ -151,4 +150,5 @@ export interface OengusGame {
     ratio: string;
     emulated: boolean;
     categories: OengusCategory[];
+    user: OengusUser;
 }
