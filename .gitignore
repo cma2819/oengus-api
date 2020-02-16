@@ -103,5 +103,8 @@ dist
 # TernJS port file
 .tern-port
 
+# Compoiled testing files
+dist_testing
+
 # Not working test
 test
