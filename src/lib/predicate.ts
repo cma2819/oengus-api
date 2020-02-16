@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { OengusMarathon, OengusQuestion, OengusUser, OengusRole, OengusFieldType, OengusRunType, OengusLine, OengusSchedule, OengusSelection, OengusSelectionStatus, OengusSelectionLine, OengusOpponent, OengusOpponentDtos, OengusAvailability, OengusGameLine, OengusGame, OengusCategory } from '../types';
+import { OengusMarathon, OengusQuestion, OengusUser, OengusRole, OengusFieldType, OengusRunType, OengusLine, OengusSchedule, OengusSelection, OengusSelectionStatus, OengusOpponent, OengusOpponentDtos, OengusAvailability, OengusGame, OengusCategory } from '../types';
 
 export const isRole = (source: any): source is OengusRole => {
     if (typeof source !== 'string') {
@@ -204,7 +204,7 @@ export const isSelectionStatus = (source: any): source is OengusSelectionStatus 
     return true;
 }
 
-export const isSelectionLine = (source: any): source is OengusSelectionLine => {
+export const isSelectionLine = (source: any): source is OengusSelection => {
     if (
         !source.id === undefined || typeof source.id !== 'number' ||
         !source.categoryId === undefined || typeof source.categoryId !== 'number' ||
@@ -216,7 +216,7 @@ export const isSelectionLine = (source: any): source is OengusSelectionLine => {
     return true;
 }
 
-export const isSelection = (source: any): source is OengusSelection => {
+export const isSelection = (source: any): source is OengusSelection[] => {
     if (!source || typeof source !== 'object') {
         console.error(`Selection[${source}] could not be parsed.`);
         return false;
@@ -302,7 +302,7 @@ export const isCategory = (source: any): source is OengusCategory => {
     return true;
 }
 
-export const isGameLine = (source: any): source is OengusGameLine => {
+export const isGameLine = (source: any): source is OengusGame => {
     if (
         source.id === undefined || typeof source.id !== 'number' ||
         !source.name || typeof source.name !== 'string' ||
@@ -324,7 +324,7 @@ export const isGameLine = (source: any): source is OengusGameLine => {
     return true;
 }
 
-export const isGame = (source: any): source is OengusGame => {
+export const isGame = (source: any): source is OengusGame[] => {
     if (!source || typeof source !== 'object') {
         console.error(`Game[${source}] could not be parsed.`);
         return false;

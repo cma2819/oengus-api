@@ -8,13 +8,11 @@ import {
     OengusRunType,
     OengusSchedule,
     OengusSelection,
-    OengusSelectionLine,
     OengusSelectionStatus,
     OengusUser,
     OengusAvailability,
     OengusCategory,
     OengusGame,
-    OengusGameLine,
     OengusOpponentDtos,
     OengusOpponent
 } from './types';
@@ -29,13 +27,11 @@ export {
     OengusRunType,
     OengusSchedule,
     OengusSelection,
-    OengusSelectionLine,
     OengusSelectionStatus,
     OengusUser,
     OengusAvailability,
     OengusCategory,
     OengusGame,
-    OengusGameLine,
     OengusOpponentDtos,
     OengusOpponent
 }

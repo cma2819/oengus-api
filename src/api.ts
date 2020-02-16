@@ -18,7 +18,7 @@ export const getSchedule = async (id: string): Promise<OengusSchedule> => {
     throw new Error('Response could not parse to Schedule.');
 }
 
-export const getSelection = async (id: string, status?: string): Promise<OengusSelection> => {
+export const getSelection = async (id: string, status?: string): Promise<OengusSelection[]> => {
     const params: {
         status?: OengusSelectionStatus;
     } = { status: undefined };
@@ -32,7 +32,7 @@ export const getSelection = async (id: string, status?: string): Promise<OengusS
     throw new Error('Response could not parse to Selection.');
 }
 
-export const getGame = async (id: string): Promise<OengusGame> => {
+export const getGame = async (id: string): Promise<OengusGame[]> => {
     const response = await get(`marathon/${id}/game`);
     if (isGame(response.data)) {
         return response.data;

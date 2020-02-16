@@ -107,14 +107,10 @@ export enum OengusSelectionStatus {
     rejected = 'REJECTED'
 }
 
-export interface OengusSelectionLine {
+export interface OengusSelection {
     id: number;
     categoryId: number;
     status: OengusSelectionStatus;
-}
-
-export interface OengusSelection {
-    [index: string]: OengusSelectionLine;
 }
 
 export interface OengusOpponent {
@@ -147,7 +143,7 @@ export interface OengusCategory {
     user: OengusUser;
 }
 
-export interface OengusGameLine {
+export interface OengusGame {
     id: number;
     name: string;
     description: string;
@@ -155,8 +151,4 @@ export interface OengusGameLine {
     ratio: string;
     emulated: boolean;
     categories: OengusCategory[];
-}
-
-export interface OengusGame {
-    [index: number]: OengusGameLine;
 }
