@@ -120,7 +120,7 @@ export const isQuestion = (source: any): source is OengusQuestion => {
         source.required === undefined || typeof source.required !== 'boolean' ||
         !source.questionType || typeof source.questionType !== 'string' ||
         (source.description && typeof source.description !== 'string') ||
-        !source.position || typeof source.position !== 'number'
+        source.position === undefined || typeof source.position !== 'number'
     ) {
         console.error(`Question[${source.id}] could not be parsed.`);
         return false;
