@@ -1,6 +1,6 @@
 {
   "name": "oengus-api",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "description": "API client for oengus.io",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

@@ -103,7 +103,7 @@ export const isFieldType = (source: any): source is OengusFieldType => {
         console.error(`FieldType[${source}] could not be parsed.`);
         return false;
     }
-    if (['TEXT', 'SELECT', 'TEXTATRA', 'CHECKBOX', 'FREETEXT'].find((type: string) => {
+    if (['TEXT', 'SELECT', 'TEXTAREA', 'CHECKBOX', 'FREETEXT'].find((type: string) => {
         return type === source;
     }) === undefined) {
         console.error(`FieldType[${source}] could not be parsed.`);
