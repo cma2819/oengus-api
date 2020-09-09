@@ -68,7 +68,8 @@ export const isRunLine = (source: any): source is OengusRunLine => {
         source.customRun === undefined || typeof source.customRun !== 'boolean' ||
         source.position === undefined || typeof source.position !== 'number' ||
         !source.categoryId || typeof source.categoryId !== 'number' ||
-        !source.type || !isRunType(source.type)
+        !source.type || !isRunType(source.type) ||
+        !source.date || typeof source.date !== 'string'
     ) {
         return false;
     }
@@ -95,7 +96,8 @@ export const isSetupLine = (source: any): source is OengusSetupLine => {
         source.customRun === undefined || typeof source.customRun !== 'boolean' ||
         source.position === undefined || typeof source.position !== 'number' ||
         source.categoryId !== null ||
-        !source.type || !isRunType(source.type)
+        !source.type || !isRunType(source.type) ||
+        !source.date || typeof source.date !== 'string'
     ) {
         return false;
     }
