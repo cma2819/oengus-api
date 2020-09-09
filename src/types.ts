@@ -55,10 +55,10 @@ export enum OengusFieldType {
 
 export interface OengusSchedule {
     id: number;
-    lines: OengusLine[];
+    lines: Array<OengusRunLine|OengusSetupLine>;
 }
 
-export interface OengusLine {
+export interface OengusRunLine {
     id: number;
     gameName: string;
     console: string;
@@ -67,10 +67,27 @@ export interface OengusLine {
     categoryName: string;
     estimate: string;
     setupTime: string;
-    setupBlock: boolean;
+    setupBlock: false;
     customRun: boolean;
     position: number;
     categoryId: number;
+    type: OengusRunType;
+    runners: OengusUser[];
+}
+
+export interface OengusSetupLine {
+    id: number;
+    gameName: null;
+    console: null;
+    emulated: null;
+    ratio: null;
+    categoryName: null;
+    estimate: string;
+    setupTime: string;
+    setupBlock: true;
+    customRun: boolean;
+    position: number;
+    categoryId: null;
     type: OengusRunType;
     runners: OengusUser[];
 }
