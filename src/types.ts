@@ -73,6 +73,7 @@ export interface OengusRunLine {
     categoryId: number;
     type: OengusRunType;
     runners: OengusUser[];
+    date: string;
 }
 
 export interface OengusSetupLine {
@@ -90,6 +91,7 @@ export interface OengusSetupLine {
     categoryId: null;
     type: OengusRunType;
     runners: OengusUser[];
+    date: string;
 }
 
 export enum OengusRunType {
