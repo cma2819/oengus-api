@@ -169,5 +169,22 @@ export interface OengusGame {
     ratio: string;
     emulated: boolean;
     categories: OengusCategory[];
+}
+
+export interface OengusAnswer {
+    answer: string|null;
+    answerRequired: boolean;
+    id: number;
+    question: OengusQuestion;
+}
+
+export interface OengusSubmission {
+    answers: OengusAnswer[];
+    availabilities: OengusAvailability[];
+    games: OengusGame[];
+    id: number;
+    marathon: OengusMarathon;
+    opponentDtos: OengusOpponentDtos[]|null;
+    opponents: OengusOpponent[];
     user: OengusUser;
 }

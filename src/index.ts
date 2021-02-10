@@ -1,5 +1,6 @@
-import { getMarathon, getSchedule, getSelection, getGame } from './api';
+import { getMarathon, getSchedule, getSelection } from './api';
 import {
+    OengusAnswer,
     OengusFieldType,
     OengusRunLine,
     OengusSetupLine,
@@ -15,11 +16,13 @@ import {
     OengusCategory,
     OengusGame,
     OengusOpponentDtos,
-    OengusOpponent
+    OengusOpponent,
+    OengusSubmission,
 } from './types';
 
-export { getMarathon, getSchedule, getSelection, getGame }
+export { getMarathon, getSchedule, getSelection }
 export {
+    OengusAnswer,
     OengusFieldType,
     OengusRunLine,
     OengusSetupLine,
@@ -35,5 +38,6 @@ export {
     OengusCategory,
     OengusGame,
     OengusOpponentDtos,
-    OengusOpponent
+    OengusOpponent,
+    OengusSubmission,
 }

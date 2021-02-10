@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { OengusAnswer, OengusSubmission } from '..';
 import { OengusMarathon, OengusQuestion, OengusUser, OengusRole, OengusFieldType, OengusRunType, OengusRunLine, OengusSetupLine, OengusSchedule, OengusSelection, OengusSelectionStatus, OengusOpponent, OengusOpponentDtos, OengusAvailability, OengusGame, OengusCategory } from '../types';
 
 export const isRole = (source: any): source is OengusRole => {
@@ -333,8 +334,7 @@ export const isGameLine = (source: any): source is OengusGame => {
         !source.description || typeof source.description !== 'string' ||
         !source.console || typeof source.console !== 'string' ||
         !source.ratio || typeof source.ratio !== 'string' ||
-        source.emulated === undefined || typeof source.emulated !== 'boolean',
-        !source.user || !isUser(source.user)
+        source.emulated === undefined || typeof source.emulated !== 'boolean'
     ) {
         console.error(`GameLine[${source}] could not be parsed.`);
         return false;
@@ -362,4 +362,71 @@ export const isGame = (source: any): source is OengusGame[] => {
         return false;
     }
     return true;
+}
+
+export const isAnswer = (source: any): source is OengusAnswer => {
+    if (!source || typeof source !== 'object') {
+        console.error(`Answer[${source}] could not be parsed.`);
+        return false;
+    }
+
+    if (
+        (source.answer && typeof source.answer !== 'string') ||
+        source.answerRequired === undefined || typeof source.answerRequired !== 'boolean' ||
+        source.id === undefined || typeof source.id !== 'number' ||
+        !isQuestion(source.question)
+    ) {
+        console.error(`Answer[${source}] could not be parsed.`);
+        return false;
+    }
+
+    return true;
+}
+
+export const isSubmission = (source: any): source is OengusSubmission => {
+    if (!source || typeof source !== 'object') {
+        console.error(`Submission[${source}] could not be parsed.`);
+        return false;
+    }
+
+    if (
+        !Array.isArray(source.answers)
+        || !Array.isArray(source.availabilities)
+        || !Array.isArray(source.games)
+        || source.id === undefined || typeof source.id !== 'number'
+        // || !source.marathon || !isMarathon(source.marathon)
+        || (source.opponentDtos && Array.isArray(source.opponentDtos))
+        || !Array.isArray(source.opponents)
+        || !source.user || !isUser(source.user)
+    ) {
+        console.error(`Submission[${source}] could not be parsed.`);
+        return false;
+    }
+
+    if (source.answers.map((answer: any) => isAnswer(answer)).includes(false)) {
+        return false;
+    }
+    if (source.games.map((game: any) => isGameLine(game)).includes(false)) {
+        return false;
+    }
+    if (source.opponentDtos && source.opponentDtos.map((opponentDto: any) => isOpponentDtos(opponentDto)).includes(false)) {
+        return false;
+    }
+    if (source.opponents.map((opponent: any) => isOpponent(opponent)).includes(false)) {
+        return false;
+    }
+
+    return true;
+}
+
+export const isSubmissions = (source: any): source is OengusSubmission[] => {
+    if (!Array.isArray(source)) {
+        console.error(`Submissions[${JSON.stringify(source)}] could not be parsed.`);
+        return false;
+    }
+    const results = source.map((s) => {
+        return isSubmission(s);
+    });
+
+    return !results.includes(false);
 }
