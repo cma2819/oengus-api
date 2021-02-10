@@ -1,4 +1,4 @@
-import { getMarathon, getSchedule, getSelection } from './api';
+import { getMarathon, getSchedule, getSelection, getSubmissions } from './api';
 import {
     OengusAnswer,
     OengusFieldType,
@@ -20,7 +20,7 @@ import {
     OengusSubmission,
 } from './types';
 
-export { getMarathon, getSchedule, getSelection }
+export { getMarathon, getSchedule, getSelection, getSubmissions }
 export {
     OengusAnswer,
     OengusFieldType,
