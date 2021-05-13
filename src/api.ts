@@ -1,10 +1,10 @@
 import { get } from './lib/api';
-import { OengusMarathon, OengusSchedule, OengusSelectionStatus, OengusSelection, OengusGame } from './types';
-import { isMarathon, isSchedule, isSelection, isSelectionStatus, isGame, isSubmissions } from './lib/predicate';
+import { OengusMarathon, OengusSchedule, OengusSelectionStatus, OengusSelection } from './types';
+import { isMarathon, isSchedule, isSelection, isSelectionStatus, isSubmissions } from './lib/predicate';
 import { OengusSubmission } from '.';
 
 export const getMarathon = async (id: string): Promise<OengusMarathon> => {
-    const response = await get(`marathon/${id}`);
+    const response = await get(`marathons/${id}`);
     if (isMarathon(response.data)) {
         return response.data;
     }
@@ -12,7 +12,7 @@ export const getMarathon = async (id: string): Promise<OengusMarathon> => {
 }
 
 export const getSchedule = async (id: string): Promise<OengusSchedule> => {
-    const response = await get(`marathon/${id}/schedule`);
+    const response = await get(`marathons/${id}/schedule`);
     if (isSchedule(response.data)) {
         return response.data;
     }
@@ -26,7 +26,7 @@ export const getSelection = async (id: string, status?: string): Promise<OengusS
     if (status && isSelectionStatus(status)) {
         params.status = status;
     }
-    const response = await get(`marathon/${id}/selection`, params);
+    const response = await get(`marathons/${id}/selection`, params);
     if (isSelection(response.data)) {
         return response.data;
     }
@@ -34,7 +34,7 @@ export const getSelection = async (id: string, status?: string): Promise<OengusS
 }
 
 export const getSubmissions = async (id: string): Promise<OengusSubmission[]> => {
-    const response = await get(`marathon/${id}/submissions`);
+    const response = await get(`marathons/${id}/submissions`);
     if (isSubmissions(response.data)) {
         return response.data;
     }
