@@ -1,6 +1,7 @@
 import { getMarathon, getSchedule, getSelection, getSubmissions } from './api';
 import {
     OengusAnswer,
+    OengusConnection,
     OengusFieldType,
     OengusRunLine,
     OengusSetupLine,
@@ -23,6 +24,7 @@ import {
 export { getMarathon, getSchedule, getSelection, getSubmissions }
 export {
     OengusAnswer,
+    OengusConnection,
     OengusFieldType,
     OengusRunLine,
     OengusSetupLine,

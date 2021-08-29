@@ -102,17 +102,23 @@ export enum OengusRunType {
     other = 'OTHER'
 }
 
+export type ConnectionPlatform = 'DISCORD'|'EMAIL'|'FACEBOOK'|'INSTAGRAM'|'NICO'|'SNAPCHAT'|'SPEEDRUNCOM'|'TWITCH'|'TWITTER';
+
+export interface OengusConnection {
+    id: number;
+    platform: ConnectionPlatform;
+    username: string;
+}
 export interface OengusUser {
     id: number;
     username: string;
     usernameJapanese?: string;
     enabled: boolean;
     roles: OengusRole[];
-    twitterName?: string;
-    twitchName?: string;
     speedruncomName?: string;
     atLeastOneAccountSynchronized: boolean;
     emailPresentForExistingUser: boolean;
+    connections: OengusConnection[];
 }
 
 export enum OengusRole {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { OengusAnswer, OengusSubmission } from '..';
-import { OengusMarathon, OengusQuestion, OengusUser, OengusRole, OengusFieldType, OengusRunType, OengusRunLine, OengusSetupLine, OengusSchedule, OengusSelection, OengusSelectionStatus, OengusOpponent, OengusOpponentDtos, OengusAvailability, OengusGame, OengusCategory } from '../types';
+import { OengusMarathon, OengusQuestion, OengusUser, OengusRole, OengusFieldType, OengusRunType, OengusRunLine, OengusSetupLine, OengusSchedule, OengusSelection, OengusSelectionStatus, OengusOpponent, OengusOpponentDtos, OengusAvailability, OengusGame, OengusCategory, OengusConnection } from '../types';
 
 export const isRole = (source: any): source is OengusRole => {
     if (typeof source !== 'string') {
@@ -30,17 +30,25 @@ export const isRunType = (source: any): source is OengusRunType => {
     return true;
 }
 
+export const isConnection = (source: any): source is OengusConnection => {
+    if (
+        !source.id || typeof source.id !== 'number' ||
+        !source.platform || typeof source.platform !== 'string' ||
+        source.username === undefined || typeof source.username !== 'string'
+    ) {
+        console.error(`Connection[${source.id} for ${source.platform}] could not be parsed.`);
+        return false;
+    }
+
+    return true;
+}
+
 export const isUser = (source: any): source is OengusUser => {
     if (
         !source.id || typeof source.id !== 'number' ||
         !source.username || typeof source.username !== 'string' ||
         (source.usernameJapanese && typeof source.usernameJapanese !== 'string') ||
-        source.enabled === undefined || typeof source.enabled !== 'boolean' ||
-        (source.twitterName && typeof source.twitterName !== 'string') ||
-        (source.twitchName && typeof source.twitchName !== 'string') ||
-        (source.speedruncomName && typeof source.speedruncomName !== 'string') ||
-        source.atLeastOneAccountSynchronized === undefined || typeof source.atLeastOneAccountSynchronized !== 'boolean' ||
-        source.emailPresentForExistingUser === undefined || typeof source.emailPresentForExistingUser !== 'boolean'
+        source.enabled === undefined || typeof source.enabled !== 'boolean'
     ) {
         console.error(`User[${source.id}] could not be parsed.`);
         return false;
@@ -49,6 +57,12 @@ export const isUser = (source: any): source is OengusUser => {
         || source.roles.find((ele: any) => {
             return !isRole(ele);
         }) !== undefined) {
+        console.error(`User[${source.id}] could not be parsed.`);
+        return false;
+    }
+    if (!Array.isArray(source.connections) || source.connections.find((ele: any) => {
+        return !isConnection(ele);
+    }) !== undefined) {
         console.error(`User[${source.id}] could not be parsed.`);
         return false;
     }
