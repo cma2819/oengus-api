@@ -119,6 +119,7 @@ export interface OengusUser {
     atLeastOneAccountSynchronized: boolean;
     emailPresentForExistingUser: boolean;
     connections: OengusConnection[];
+    pronouns?: string;
 }
 
 export enum OengusRole {

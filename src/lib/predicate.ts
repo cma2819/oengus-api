@@ -48,7 +48,8 @@ export const isUser = (source: any): source is OengusUser => {
         !source.id || typeof source.id !== 'number' ||
         !source.username || typeof source.username !== 'string' ||
         (source.usernameJapanese && typeof source.usernameJapanese !== 'string') ||
-        source.enabled === undefined || typeof source.enabled !== 'boolean'
+        source.enabled === undefined || typeof source.enabled !== 'boolean' ||
+        (source.pronouns && typeof source.pronouns !== 'string')
     ) {
         console.error(`User[${source.id}] could not be parsed.`);
         return false;
