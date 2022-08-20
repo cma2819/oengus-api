@@ -94,12 +94,31 @@ export interface OengusSetupLine {
     date: string;
 }
 
+export interface OengusOtherLine {
+    id: number;
+    gameName?: string;
+    console?: string;
+    emulated: boolean;
+    ratio?: string;
+    categoryName?: string;
+    estimate: string;
+    setupTime: string;
+    setupBlock: false;
+    customRun: boolean;
+    position: number;
+    categoryId?: number;
+    type: 'OTHER';
+    runners: OengusUser[];
+    date: string;
+}
+
 export enum OengusRunType {
     single = 'SINGLE',
     race = 'RACE',
     coop = 'COOP',
     coopRace = 'COOP_RACE',
-    other = 'OTHER'
+    relayRace = 'RELAY_RACE',
+    other = 'OTHER',
 }
 
 export type ConnectionPlatform = 'DISCORD'|'EMAIL'|'FACEBOOK'|'INSTAGRAM'|'NICO'|'SNAPCHAT'|'SPEEDRUNCOM'|'TWITCH'|'TWITTER';
@@ -126,12 +145,7 @@ export enum OengusRole {
     user = 'ROLE_USER'
 }
 
-export enum OengusSelectionStatus {
-    validated = 'VALIDATED',
-    todo = 'TODO',
-    bonus = 'BONUS',
-    rejected = 'REJECTED'
-}
+export type OengusSelectionStatus = 'VALIDATED'|'TODO'|'BONUS'|'REJECTED'|'BACKUP';
 
 export interface OengusSelection {
     id: number;
